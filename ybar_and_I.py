@@ -14,7 +14,7 @@ def y_bar(beam_list):
         a_tot += beam[1] * beam[2]
     return y_sum / a_tot
 
-def I(beam_list, y_bar):
+def I(beam_list):
     # y_bar must be a number
     # beam_list must be a 2D list of arguements,
     # Each element in the list should be of the form:
@@ -26,11 +26,14 @@ def I(beam_list, y_bar):
     # Outputs I
     i_o_sum = 0
     vert_sum = 0
+    y_b = y_bar(beam_list)
     for beam in beam_list:
         i_o_sum += beam[2]**3 * beam[1] / 12
-        vert_sum += (y_bar - beam[0] + beam[2] / 2) ** 2 * beam[1] * beam[2]
+        vert_sum += (y_b - beam[0] + beam[2] / 2) ** 2 * beam[1] * beam[2]
     return i_o_sum + vert_sum
 
+def Q(beam_list):
+    pass
 
 if __name__ == "__main__":
     beam_list = [[76.27, 100   ,  1.27],
@@ -43,5 +46,5 @@ if __name__ == "__main__":
     
     y = y_bar(beam_list)
     print(y)
-    print(I(beam_list, y))
+    print(I(beam_list))
     
