@@ -70,4 +70,4 @@ if __name__ == "__main__":
     print(thin_plate_buckling_c3(60-1.5, 1.5))
     # Should return 13.518
     print(thin_plate_buckling_shear(80, 100))
-    # Should return 13.8
+    # Value not tested but should be correct.
