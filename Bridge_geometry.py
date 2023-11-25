@@ -14,6 +14,10 @@ def y_bar(beam_list):
         a_tot += beam[1] * beam[2]
     return y_sum / a_tot
 
+# Stupid function. Returns y_top
+def y_top(beam_list):
+    return max([beam[0] for beam in beam_list])
+
 def I(beam_list):
     # y_bar must be a number
     # beam_list must be a 2D list of arguements,
@@ -57,6 +61,8 @@ def Q(beam_list, h):
     d = h - y_bar(aug_b_list)
     return d * area
 
+
+
 if __name__ == "__main__":
     beam_list = [[76.27, 100   ,  1.27],
                  [75   ,   5   ,  1.27],
@@ -65,7 +71,7 @@ if __name__ == "__main__":
                  [75   ,   1.27, 75  ],
                  [ 1.27,  77.46,  1.27]
                  ]
-    
+    print(y_top(beam_list))
     y = y_bar(beam_list)
     print(y)
     print(I(beam_list))
