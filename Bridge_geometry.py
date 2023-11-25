@@ -2,10 +2,10 @@ def y_bar(beam_list):
     # Accepts a 2D list of arguements,
     # Each element in the list should be of the form:
     # [y, width, height]
-    # Where y is the vertical distance from an axis 
+    # Where y is the vertical distance from an axis |^|
     # defined as 0 to the top of the beam
-    # Where width is the width of the beam
-    # Where height is the height of the beam
+    # Where width is the width of the beam ____>
+    # Where height is the height of the beam |^|
     # Outputs y_bar in mm
     y_sum = 0
     a_tot = 0
