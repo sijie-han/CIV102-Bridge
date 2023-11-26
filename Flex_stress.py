@@ -1,3 +1,10 @@
+# sigma_top, sigma_bottom and tau_glue are solid
+# sigma_depth should be solid but is untested
+# tau_cent could cause problems because it uses
+# Bridge_geometry.thickness, which does not handle
+# edge cases well (finding thickness at intersection)
+# of beams. In most cases, tau_cent should be accurate
+
 import Bridge_geometry
 
 def sigma_depth(beam_list, M, dist_from_bottom):
