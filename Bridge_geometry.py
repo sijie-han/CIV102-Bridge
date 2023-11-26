@@ -61,7 +61,16 @@ def Q(beam_list, h):
     d = h - y_bar(aug_b_list)
     return d * area
 
+def horizontal_thickness(beam_list, depth):
+    # Not great at boundaries
+    h = depth
+    thickness = 0
+    unknown_thickness = 10000
+    for beam in beam_list:
+        if beam[0] >= h and ((beam[0] - beam[2]) <= h):
+            thickness += beam[1]
 
+    return thickness
 
 if __name__ == "__main__":
     beam_list = [[76.27, 100   ,  1.27],
@@ -71,10 +80,11 @@ if __name__ == "__main__":
                  [75   ,   1.27, 75  ],
                  [ 1.27,  77.46,  1.27]
                  ]
-    print(y_top(beam_list))
+    #print(y_top(beam_list))
     y = y_bar(beam_list)
-    print(y)
-    print(I(beam_list))
+    #print(y)
+    #print(I(beam_list))
+    print(horizontal_thickness(beam_list, 74))
 
     beam_list = [[241, 241, 241]]
     print(Q(beam_list, 120.5))

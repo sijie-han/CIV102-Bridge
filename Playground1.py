@@ -31,8 +31,8 @@ yb = Bridge_geometry.y_bar(beam_list)
 y_top = Bridge_geometry.y_top(beam_list)
 
 # Have to integrate with Ian's code later
-M = 120 # multiplied by ____ factor p
-V = 30000 # multuplied by ____ factor p
+M = 1000 # multiplied by ____ factor p
+V = 546 # multuplied by ____ factor p
 
 # Unironically really hard to do the rest of the steps without a good BMD and SFD
 
