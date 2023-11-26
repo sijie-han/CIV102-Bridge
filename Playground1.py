@@ -58,7 +58,7 @@ V = 546 # multuplied by ____ factor p
 #    <1.27>  <80>   <1.27>
 #            
 
-
+# Geometry
 beam_list = [   [100, 100   ,  1.27],
                 [100 - 1.27, 100   ,  1.27],
                 [100 - 2 * 1.27, 100,  1.27],
@@ -86,9 +86,12 @@ print(yb)
 stress_top = Flex_stress.sigma_top(beam_list, M_max)
 stress_bot = Flex_stress.sigma_bottom(beam_list, M_max)
 tau_cent = Flex_stress.tau_cent(beam_list, V)
+tau_glue = Flex_stress.tau_glue(beam_list, V, 1.27, 15*2 + 1.27*2)
 
 print("In tension:")
 print(stress_top, stress_bot)
 print("strain:")
 print(tau_cent)
+print("strain on glue")
+print(tau_glue)
 

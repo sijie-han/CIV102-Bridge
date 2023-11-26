@@ -1,3 +1,5 @@
+# y_bar, I and Q functions are solid
+
 def y_bar(beam_list):
     # Accepts a 2D list of arguements,
     # Each element in the list should be of the form:
