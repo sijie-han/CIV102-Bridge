@@ -6,21 +6,25 @@ mu = 0.2
 t = 1.27 # mm
 h = 120 # mm
 top_width = 100 # mm
-beam_list = [[h+t*2, top_width   ,  t*2],
-             [h   ,   5   ,  h],
-             [h  ,   5   ,  h],
-             [h   ,   1.27, h  ],
-             [h  ,   1.27, h  ],
+beam_list = [[h, top_width   ,  t*2],
+             [h-2*t   ,  15   ,  t],
+             [h-2*t  ,   15   ,  t],
+             [h-2*t   ,  t, h-2*t ],
+             [h-2*t  ,   t, h-2*t] 
              ]
+P_max = 300 # N
 h_glue = beam_list[2][0]
 number_layers_on_top = beam_list[0][2] / t
 number_of_supports = 2
 d_mid = 80 # mm
 h = beam_list[0][0] # mm
-glue_width = 12+1.27*2 # mm
+glue_width = 2*(15+1.27) # mm
 # distance from support where the maximum shear is
-d_max = 100 # mm
+d_max = 150 # mm
 d_side = 10 # mm
+
+
+
 
 def sigma_depth(beam_list, M, dist_from_bottom):
     I = Bridge_geometry.I(beam_list)
@@ -30,6 +34,7 @@ def sigma_depth(beam_list, M, dist_from_bottom):
 
 def sigma_top(beam_list, M):
     I = Bridge_geometry.I(beam_list)
+    print(f"I = {I}")
     h = Bridge_geometry.y_top(beam_list)
     yb = Bridge_geometry.y_bar(beam_list)
     return M * (h - yb) / I
@@ -42,6 +47,7 @@ def sigma_bottom(beam_list, M):
 def tau_cent(beam_list, V):
     yb = Bridge_geometry.y_bar(beam_list)
     Q = Bridge_geometry.Q(beam_list, yb)
+    print(f"Q = {Q}")
     I = Bridge_geometry.I(beam_list)
     b_c = Bridge_geometry.horizontal_thickness(beam_list, yb)
     return V * Q / (I * b_c)
@@ -49,6 +55,8 @@ def tau_cent(beam_list, V):
 def tau_glue(beam_list, V, depth_of_interest, glue_width):
     h = depth_of_interest
     Q = Bridge_geometry.Q(beam_list, h)
+    print(f"Q_glue = {Q}")
+
     I = Bridge_geometry.I(beam_list)
     return V * Q / (I * glue_width)
 
@@ -60,20 +68,21 @@ def sigma_cr2():
 
 def sigma_cr3(beam_list):
     y_bar = Bridge_geometry.y_bar(beam_list)
+    print(f"y_bar = {y_bar}")
     return (6 * np.pi**2 * E) / (12 * (1 - mu)**2) * (t / (h_glue - y_bar))**2
 
 def tau_cr4():
     return (5 * np.pi**2 * E) / (12 * (1 - mu)**2) * ((t * number_of_supports / h)**2 + (t * number_of_supports / d_max)**2)
 
-M_max = 83851.323 # Convert kN to N
+M_max = 83851.323 # N-mm
 
 sigma_compression = sigma_top(beam_list, M_max)
 print(f"sigma_compression = {sigma_compression}")
 sigma_tension = sigma_bottom(beam_list, M_max)
 print(f"sigma_tension = {sigma_tension}")
-tau_g = tau_glue(beam_list, 307.145 , h_glue, glue_width)  # Convert kN to N
+tau_g = tau_glue(beam_list, P_max , h_glue, glue_width)  # Convert kN to N
 print(f"tau_glue = {tau_g}")
-tau_max = tau_cent(beam_list, 307.145 )  # Convert kN to N
+tau_max = tau_cent(beam_list, P_max )  # Convert kN to N
 print(f"tau_max = {tau_max}")
 
 FOS_tension = 30 / sigma_tension

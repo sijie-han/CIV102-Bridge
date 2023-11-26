@@ -26,9 +26,10 @@ beam_list = [   [100 + 2*1.27, 120   ,  1.27],
                 [100   ,   1.27, 100  ],
                 ]
 
-#I = Bridge_geometry.I(beam_list)
-#yb = Bridge_geometry.y_bar(beam_list)
-#y_top = Bridge_geometry.y_top(beam_list)
+
+I = Bridge_geometry.I(beam_list)
+yb = Bridge_geometry.y_bar(beam_list)
+y_top = Bridge_geometry.y_top(beam_list)
 
 # Have to integrate with Ian's code later
 M = 1000 # multiplied by ____ factor p

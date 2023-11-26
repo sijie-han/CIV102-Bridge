@@ -33,12 +33,11 @@ def I(beam_list):
     y_b = y_bar(beam_list)
     for beam in beam_list:
         i_o_sum += beam[2]**3 * beam[1] / 12
-        vert_sum += (y_b - beam[0] + beam[2] / 2) ** 2 * beam[1] * beam[2]
+        vert_sum += ((beam[0] - beam[2] / 2 - y_b)**2) * beam[1] * beam[2]
     return i_o_sum + vert_sum
 
 def Q(beam_list, h):
-    # Accepts 
-    # Accepts a 2D list of arguements,
+    # Accepts a 2D list of arguments,
     # Each element in the list should be of the form:
     # [y, width, height]
     # Where y is the vertical distance from an axis 
@@ -51,14 +50,14 @@ def Q(beam_list, h):
     for beam in beam_list:
         if beam[0] < h:
             aug_b_list.append(beam.copy())
-            area += beam[1]*beam[1]
+            area += beam[1] * beam[2]
         elif beam[0] - beam[2] < h:
             aug_b_list.append(beam.copy())
             aug_b_list[-1][0] = h
             aug_b_list[-1][2] = h - (beam[0] - beam[2])
-            area += aug_b_list[-1][1]*aug_b_list[-1][2]
-
-    d = h - y_bar(aug_b_list)
+            area += aug_b_list[-1][1] * aug_b_list[-1][2]
+    
+    d = abs(y_bar(beam_list) - y_bar(aug_b_list))
     return d * area
 
 def horizontal_thickness(beam_list, depth):
