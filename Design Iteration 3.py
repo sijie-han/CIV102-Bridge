@@ -4,27 +4,25 @@ import numpy as np
 E = 4000 # MPa
 mu = 0.2
 t = 1.27 # mm
-h = 120 # mm
+h = 140 # mm
 top_width = 100 # mm
 beam_list = [[h, top_width   ,  t*3],
-             [h-2*t   ,  15   ,  t],
-             [h-2*t  ,   15   ,  t],
+             [h-2*t   ,  7   ,  t],
+             [h-2*t  ,   7   ,  t],
              [h-2*t   ,  t, h-2*t ],
              [h-2*t  ,   t, h-2*t],
-             [t   ,  15   ,  t],
-             [t  ,   15   ,  t]
+             [t  ,   7, t] 
              ]
 P_max = 300 # N
 h_glue = beam_list[2][0]
 number_layers_on_top = beam_list[0][2] / t
-print(number_layers_on_top)
 number_of_supports = 2
-d_mid = 80 # mm distance between legs
+d_mid = 80 # mm
 h = beam_list[0][0] # mm
-glue_width = 2*(15+1.27) # mm
-# distance from support where the maximum shear is
-d_max = 150 # mm
-d_side = 10 # mm side of legs
+glue_width = 2*(7) # mm
+# distance from support1 where the maximum shear is
+d_max = 100 # mm
+d_side = (top_width-d_mid)/2 - t  # mm
 
 
 
@@ -64,18 +62,18 @@ def tau_glue(beam_list, V, depth_of_interest, glue_width):
     return V * Q / (I * glue_width)
 
 def sigma_cr1():
-    return (4 * np.pi**2 * E) / (12 * (1 - mu)**2) * (t * number_layers_on_top / d_mid)**2
+    return (4 * np.pi**2 * E) / (12 * (1 - mu**2)) * (t * number_layers_on_top / (d_mid-glue_width+t*2))**2
 
 def sigma_cr2():
-    return (0.425 * np.pi**2 * E) / (12 * (1 - mu)**2) * (t * number_layers_on_top / d_side)**2
+    return (0.425 * np.pi**2 * E) / (12 * (1 - mu**2)) * (t * number_layers_on_top / d_side)**2
 
 def sigma_cr3(beam_list):
     y_bar = Bridge_geometry.y_bar(beam_list)
     print(f"y_bar = {y_bar}")
-    return (6 * np.pi**2 * E) / (12 * (1 - mu)**2) * (t / (h_glue - y_bar))**2
+    return (6 * np.pi**2 * E) / (12 * (1 - mu**2) )* (t / (h_glue - y_bar))**2
 
 def tau_cr4():
-    return (5 * np.pi**2 * E) / (12 * (1 - mu)**2) * ((t * number_of_supports / h)**2 + (t * number_of_supports / d_max)**2)
+    return (5 * np.pi**2 * E) / (12 * (1 - mu**2)) * ((t / h)**2 + (t / d_max)**2)
 
 M_max = 83851.323 # N-mm
 
@@ -97,12 +95,16 @@ print(f"FOS_shear = {FOS_shear}")
 FOS_glue = 2 / tau_g
 print(f"FOS_glue = {FOS_glue}")
 FOS_shear_buckling = tau_cr4() / tau_max
+print(f"tau_cr4 = {tau_cr4()}")
 print(f"FOS_shear_buckling = {FOS_shear_buckling}")
 FOS_flexural_buckling1 = sigma_cr1() / sigma_compression
+print(f"sigma_cr1 = {sigma_cr1()}")
 print(f"FOS_flexural_buckling1 = {FOS_flexural_buckling1}")
 FOS_flexural_buckling2 = sigma_cr2() / sigma_compression
+print(f"sigma_cr2 = {sigma_cr2()}")
 print(f"FOS_flexural_buckling2 = {FOS_flexural_buckling2}")
 FOS_flexural_buckling3 = sigma_cr3(beam_list) / sigma_compression
+print(f"sigma_cr3 = {sigma_cr3(beam_list)}")
 print(f"FOS_flexural_buckling3 = {FOS_flexural_buckling3}")
 
 if __name__ == "__main__":
