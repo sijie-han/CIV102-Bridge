@@ -55,7 +55,8 @@ for x in range(L + 857):
 # Find maximum SFD and BMD
 SFD_max_index = np.max(np.abs(SFD_Max), axis=0)
 BMD_max_index = np.max(np.abs(BMD_Max), axis=0)
-
+print('Maximum SFD: {} N'.format(SFD_max_index.max()))
+print('Maximum BMD: {} N-mm'.format(BMD_max_index.max()))
 # Plotting
 plt.figure(figsize=(12, 6))
 plt.subplot(2, 1, 1)
