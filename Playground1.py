@@ -1,5 +1,6 @@
 import Bridge_geometry
 import Flex_stress
+import Buckling
 
 
 # Geomtry 0, Design 0
@@ -81,8 +82,7 @@ V = 296.48 #[N] times factor P / 446.667 where P is the heaviest load
 print(I)
 print(yb)
 
-# flexurial stresses.
-
+# flexurial stresses and shear stresses
 stress_top = Flex_stress.sigma_top(beam_list, M_max)
 stress_bot = Flex_stress.sigma_bottom(beam_list, M_max)
 tau_cent = Flex_stress.tau_cent(beam_list, V)
@@ -95,3 +95,13 @@ print(tau_cent)
 print("strain on glue")
 print(tau_glue)
 
+
+# Thin plate buckling
+# Bottom member case 1
+buck_c1 = Buckling.thin_plate_buckling_c1(80, t = 2*1.27)
+stress = Flex_stress.sigma_depth(beam_list, M, 1.27)
+print(buck_c1)
+print(stress)
+# Top member case 1
+buck_c1 = Buckling.thin_plate_buckling_c1(80, t = 1.27)
+print(buck_c1)

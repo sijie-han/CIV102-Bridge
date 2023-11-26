@@ -11,7 +11,7 @@ def sigma_depth(beam_list, M, dist_from_bottom):
     I = Bridge_geometry.I(beam_list)
     h = dist_from_bottom
     yb = Bridge_geometry.y_bar(beam_list)
-    return M * (h - yb) / I
+    return M * abs(h - yb) / I
 
 def sigma_top(beam_list, M):
     I = Bridge_geometry.I(beam_list)
