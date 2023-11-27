@@ -54,8 +54,8 @@ def thin_plate_buckling_shear(clear_distance, diaphram_dist, t = 1.27):
     b = clear_distance
     POISSONS_RATIO = 0.2
     E = 4000 #[N/mm^2]
-    K = 4
-
+    K = 5
+    
     CONSTANT = K * (math.pi)**2 * E / (12 * (1-POISSONS_RATIO**2))
     CALC = (t/b)**2 + (t/a)**2
     return CALC * CONSTANT
