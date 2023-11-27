@@ -1,5 +1,5 @@
 # sigma_top, sigma_bottom and tau_glue are solid
-# sigma_depth should be solid but is untested
+# sigma_depth should be solid but is untested rigerously.
 # tau_cent could cause problems because it uses
 # Bridge_geometry.thickness, which does not handle
 # edge cases well (finding thickness at intersection)
