@@ -7,16 +7,17 @@ t = 1.27 # mm
 h = 120 # mm
 top_width = 100 # mm
 # the dimensions of the beam in the format [height, width, thickness]
+# A rough sketch of the crkoss section of the beam
 #   <--------100--------->
 #   |‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|   | 1.27
 #   |                    |   | 1.27
 #   |____________________|   | 1.27    3 layers at top
-#     |___  |    |  ___|              | 
+#1.27 |___  |    |  ___|  1.27        | 
 #        |  |<80>|  |                 | 
 #        |  |    |  |                 | 
 #        |  |    |  |                 |120 - 3*1.27
 #     ___|  |    |  |___              |
-#    |______|    |______|              |
+#1.27|______|    |______|  1.27       |
 #    |<7>|1.27  1.27|<7>|
 beam_list = [[h, top_width   ,  t*3],
              [h-3*t   ,  7   ,  t],
