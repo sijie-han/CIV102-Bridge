@@ -4,14 +4,15 @@ import numpy as np
 E = 4000 # MPa
 mu = 0.2
 t = 1.27 # mm
-h = 140 # mm
-top_width = 100 # mm
+h = 120 # mm
+top_width = 110 # mm
 beam_list = [[h, top_width   ,  t*3],
              [h-2*t   ,  7   ,  t],
              [h-2*t  ,   7   ,  t],
              [h-2*t   ,  t, h-2*t ],
              [h-2*t  ,   t, h-2*t],
-             [t  ,   7, t] 
+             [t  ,   7, t],
+             [t  ,   7, t]
              ]
 P_max = 300 # N
 h_glue = beam_list[2][0]
@@ -21,7 +22,7 @@ d_mid = 80 # mm
 h = beam_list[0][0] # mm
 glue_width = 2*(7) # mm
 # distance from support1 where the maximum shear is
-d_max = 100 # mm
+d_max = 120 # mm
 d_side = (top_width-d_mid)/2 - t  # mm
 
 
