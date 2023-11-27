@@ -6,22 +6,25 @@ mu = 0.2
 t = 1.27 # mm
 h = 120 # mm
 top_width = 100 # mm
-beam_list = [[h, top_width   ,  t*2],
-             [h-2*t   ,  15   ,  t],
-             [h-2*t  ,   15   ,  t],
+beam_list = [[h, top_width   ,  t*3],
+             [h-2*t   ,  7   ,  t],
+             [h-2*t  ,   7   ,  t],
              [h-2*t   ,  t, h-2*t ],
-             [h-2*t  ,   t, h-2*t] 
+             [h-2*t  ,   t, h-2*t],
+             [t  ,   7, t],
+             [t, 7, t ] 
              ]
 P_max = 300 # N
+M_max = 78200  # N-mm
 h_glue = beam_list[2][0]
 number_layers_on_top = beam_list[0][2] / t
 number_of_supports = 2
 d_mid = 80 # mm
 h = beam_list[0][0] # mm
-glue_width = 2*(15+1.27) # mm
-# distance from support where the maximum shear is
-d_max = 150 # mm
-d_side = (top_width-d_mid)/2 - t  # mm
+glue_width = 2*(7) # mm
+# distance from support1 where the maximum shear is
+d_max = 100 # mm
+d_side = (top_width-d_mid)/2 - t-7  # mm
 
 
 
@@ -61,7 +64,7 @@ def tau_glue(beam_list, V, depth_of_interest, glue_width):
     return V * Q / (I * glue_width)
 
 def sigma_cr1():
-    return (4 * np.pi**2 * E) / (12 * (1 - mu**2)) * (t * number_layers_on_top / (d_mid-glue_width+t*2))**2
+    return (4 * np.pi**2 * E) / (12 * (1 - mu**2)) * (t * number_layers_on_top / (d_mid))**2
 
 def sigma_cr2():
     return (0.425 * np.pi**2 * E) / (12 * (1 - mu**2)) * (t * number_layers_on_top / d_side)**2
@@ -72,9 +75,9 @@ def sigma_cr3(beam_list):
     return (6 * np.pi**2 * E) / (12 * (1 - mu**2) )* (t / (h_glue - y_bar))**2
 
 def tau_cr4():
-    return (5 * np.pi**2 * E) / (12 * (1 - mu**2)) * ((t / h)**2 + (t / d_max)**2)
+    return (5 * np.pi**2 * E) / (12 * (1 - mu**2)) * ((t / (h-t*3))**2 + (t / d_max)**2)
 
-M_max = 83851.323 # N-mm
+ # N-mm
 
 sigma_compression = sigma_top(beam_list, M_max)
 print(f"sigma_compression = {sigma_compression}")
@@ -106,9 +109,15 @@ FOS_flexural_buckling3 = sigma_cr3(beam_list) / sigma_compression
 print(f"sigma_cr3 = {sigma_cr3(beam_list)}")
 print(f"FOS_flexural_buckling3 = {FOS_flexural_buckling3}")
 
-if __name__ == "__main__":
-    print(tau_cent(beam_list, 100))
-    print(tau_glue(beam_list, 100, 50, 2.54))
-
-    print(sigma_depth(beam_list, 100, 50))
-    print(tau_glue(beam_list, 100, 50, 2.54))
+V_fail_shear = FOS_shear * P_max
+print(f"V_fail_shear = {V_fail_shear}")
+V_fail_glue = FOS_glue * P_max
+print(f"V_fail_glue = {V_fail_glue}")
+V_fail_shear_buckling = FOS_shear_buckling * P_max
+print(f"V_fail_shear_buckling = {V_fail_shear_buckling}")
+M_fail_buck123 = min(FOS_flexural_buckling1,FOS_flexural_buckling2,FOS_flexural_buckling3) * M_max
+print(f"M_fail_buck123 = {M_fail_buck123}")
+M__fail_comp = FOS_compression * M_max
+print(f"M__fail_comp = {M__fail_comp}")
+M_fail_tens = FOS_tension * M_max
+print(f"M_fail_tens = {M_fail_tens}")
