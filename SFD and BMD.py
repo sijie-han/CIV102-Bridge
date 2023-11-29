@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 OG_LOADING_LOC = [-857, -681, -517, -341, -177, -1]
-LOADS = [400/6, 400/6, 400/6, 400/6, 400/6, 400/6]
+LOADS = [400/6, 400/6, 400/6, 400/6, 90, 90]
 STEP_SIZE = 120
 LENGTH = 1200
 
@@ -46,7 +46,7 @@ def BMD(sfd):
     Bmd = [0]
     cumsum = 0
     for i in range(len(sfd)-1):
-        cumsum += sfd[i] * LENGTH / STEP_SIZE / 1000 / 1000
+        cumsum += sfd[i] * LENGTH / STEP_SIZE / 1000 
         Bmd.append(cumsum)
     #print(Bmd[0])
     #print(Bmd[-2])
@@ -75,12 +75,23 @@ def envolelopes(pos_lists, loads):
 
     return sfd_env, bmd_env
 
-
+d_x = LENGTH/STEP_SIZE
+x_vals = [d_x*i for i in range(STEP_SIZE)]
 sfd, Bmd = envolelopes(OG_LOADING_LOC, LOADS)
-plt.figure(figsize=(12, 6))
+print(max(sfd))
+print(max(Bmd))
+plt.figure(figsize=(12, 10))
 plt.subplot(2, 1, 1)
-plt.plot(range(STEP_SIZE), sfd, label='Max SFD')
+plt.plot(x_vals, sfd, label='Max SFD')
+plt.title("Shear Force Envolope")
+plt.xlabel("Bridge location (mm)")
+plt.ylabel("Shear force upwards on right is positive (N)")
+plt.legend()
 plt.subplot(2,1,2)
-plt.plot(range(STEP_SIZE), Bmd, label='Max BMD')
+plt.title("Bending Moment Envolope")
+plt.plot(x_vals, Bmd, label='Max BMD')
+plt.xlabel("Bridge location (mm)")
+plt.ylabel("Moment, tension on bottom is positive (Nm)")
+plt.legend()
 
 plt.show()

@@ -17,7 +17,7 @@ number_layers_on_top = beam_list[0][2] / t
 number_of_supports = 2
 d_mid = 80 # mm
 h = beam_list[0][0] # mm
-glue_width = 2*(15+1.27) # mm
+glue_width = 2*1.27 # mm
 # distance from support where the maximum shear is
 d_max = 150 # mm
 d_side = (top_width-d_mid)/2 - t  # mm
